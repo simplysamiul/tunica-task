@@ -1,0 +1,50 @@
+.modal-area{
+    text-align: center;
+}
+.modal-form{
+    background-color: black;
+    border-top-left-radius: 70px;
+    border-bottom-right-radius: 70px;
+}
+.modal-form img{
+    margin-bottom: 5px;
+}
+.modal-form form{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+.modal-form input{
+    width: 80%;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+.status-field{
+    color: white;
+    margin: 20px  0;
+}
+.status-field input{
+    margin: 0;
+    width: 30px;
+    height: 15px;
+}
+.modal-form button{
+    background:2px solid lightgray;
+    padding: 10px 35px;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+.modal-form button:hover{
+    border: 2px solid white;
+    background-color: black;
+    color: white;
+}
+.notification{
+    width: 100%;
+    margin: 20px 0;
+}

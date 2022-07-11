@@ -1,17 +1,36 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import formLogo from '../../../assets/logo2.svg';
+import { useForm } from 'react-hook-form';
 import { Alert, CircularProgress } from '@mui/material';
-import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
-import formLogo from '../../../assets/logo1.svg';
-import '../../../styles/AddStudents.css';
+import '../../../styles/EditStudent.css';
 
-const AddStudent = () => {
-    const [loading, setLoading] = useState(false);
-    const [addSuccessfully, setAddSuccessfully] = useState(false);
+const style = {
+  position: 'absolute',
+  top: '58%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'black',
+  color: "white",
+  borderTopLeftRadius: "60px",
+  borderBottomRightRadius: "60px",
+  boxShadow: 24,
+  p: 2,
+};
+
+export default function EditStudent({ edit, setEdit, editId }) {
+  const handleClose = () => setEdit(false);
+  const [loading, setLoading] = React.useState(false);
+    const [addSuccessfully, setAddSuccessfully] = React.useState(false);
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = data => {
+        console.log(data);
         setLoading(true);
-        fetch("https://obscure-wildwood-24223.herokuapp.com/addstudents", {
-            method: "POST",
+        const url = `https://obscure-wildwood-24223.herokuapp.com/updatestudent/${editId}`;
+        fetch(url, {
+            method: "PUT",
             headers:{
                 "content-type" : "application/json"
             },
@@ -19,14 +38,27 @@ const AddStudent = () => {
         })
         .then(res => res.json())
         .then(data => {
+          console.log(data);
             setLoading(false);
-            setAddSuccessfully(true);  
+            setAddSuccessfully(true);
+            if(data.modifiedCount > 0){
+              window.location.reload(false);
+            } 
             reset();
         }) 
     };
-    return (
-            <div className="section-container">
-                <div className="form-area">
+
+  return (
+    <div>
+      <Modal
+        open={edit}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        <div className="modal-area">
+                <div className="modal-form">
                     <img src={formLogo} alt="" />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <input placeholder='Name*' {...register("name")} required />
@@ -41,12 +73,13 @@ const AddStudent = () => {
                             {loading && <CircularProgress color="secondary" />}
                             <button type='submit'>Submit</button>
                             <div className="notification">
-                            {addSuccessfully && <Alert severity="success">Student Add Successfully !!</Alert>}
                             </div>
                         </form>
+                        {addSuccessfully && <Alert severity="success">Student Edit Successfully !!</Alert>}
                 </div>
             </div>
-    );
-};
-
-export default AddStudent;
+        </Box>
+      </Modal>
+    </div>
+  );
+}

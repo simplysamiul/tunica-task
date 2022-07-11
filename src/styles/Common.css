@@ -1,0 +1,19 @@
+.btn{
+    color: white;
+    border: none;
+    font-size: 14px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+.delete-button{
+    background-color: red;
+}
+.edit-button {
+    background-color: blue;
+}
+.close-button{
+    background-color: yellow;
+    color: black;
+}

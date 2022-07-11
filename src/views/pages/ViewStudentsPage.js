@@ -1,10 +1,10 @@
-import React from 'react';
+import AllStudents from '../components/ViewStudents/AllStudents';
 
 const ViewStudentsPage = () => {
     return (
-        <div>
-            view students page
-        </div>
+        <>
+            <AllStudents />
+        </>
     );
 };
 

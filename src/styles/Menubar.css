@@ -1,0 +1,17 @@
+.menu-area{
+    background-color: black;
+}
+.menu-container{
+    margin: 0 50px;
+}
+.menu-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu-items a{
+    text-decoration: none;
+    color: white;
+    margin: 0 15px;
+    font-family:'Times New Roman', Times, serif ;
+}

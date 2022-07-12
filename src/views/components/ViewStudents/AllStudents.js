@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import EditStudent from './EditStudent';
 import DeleteStudent from './DeleteStudent';
 import '../../../styles/Common.css';
+import Preloader from '../../custome/Preloader';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,6 +33,7 @@ export default function AllStudents() {
   // Student Edit Modal
   const [edit, setEdit] = React.useState(false);
   const [editId, setEditId] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const handleOpen = (id) => {
     setEditId(id);
     setEdit(true);
@@ -46,13 +48,18 @@ export default function AllStudents() {
   // Show all students data
   const [students, setStudents] = React.useState([]);
   React.useEffect(()=>{
+      setLoading(true)
       fetch("https://obscure-wildwood-24223.herokuapp.com/allstudents")
       .then(res => res.json())
-      .then(data => setStudents(data))
+      .then(data => {
+        setStudents(data)
+        setLoading(false)
+      });
   },[]);
   return (
     <>
-    <TableContainer component={Paper}>
+    {loading ? <Preloader />
+    :<TableContainer component={Paper}>
       <Table sx={{ minWidth: 600 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -84,7 +91,7 @@ export default function AllStudents() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>}
     <EditStudent
     editId={editId} 
     edit={edit}
@@ -94,6 +101,8 @@ export default function AllStudents() {
     deleteId={deleteId}
     delet={delet}
     setDelet={setDelet}
+    setStudents={setStudents}
+    students={students}
     />
     </>
   );

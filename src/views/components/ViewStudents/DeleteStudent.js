@@ -9,7 +9,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DeleteStudent({ delet, setDelet, deleteId }) {
+export default function DeleteStudent({ delet, setDelet, deleteId, setStudents, students }) {
   const handleClose = () => {setDelet(false)};
   const handleDelete = () =>{
     const url = `https://obscure-wildwood-24223.herokuapp.com/removestudent/${deleteId}`;
@@ -19,11 +19,13 @@ export default function DeleteStudent({ delet, setDelet, deleteId }) {
     .then(res => res.json())
     .then(data => {
       if(data.deletedCount > 0){
-        window.location.reload(false);
+      const afterDelete = students.filter((items) => items._id !== deleteId)
+      setStudents(afterDelete)
       }
     })
     setDelet(false);
   }
+  
   return (
     <div>
       <Dialog

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import formLogo from '../../../assets/logo1.svg';
 import '../../../styles/AddStudents.css';
+import Preloader from '../../custome/Preloader';
 
 const AddStudent = () => {
     const [loading, setLoading] = useState(false);
@@ -20,9 +21,9 @@ const AddStudent = () => {
         .then(res => res.json())
         .then(data => {
             setLoading(false);
-            setAddSuccessfully(true);  
+            setAddSuccessfully(true);
             reset();
-        }) 
+        })
     };
     return (
             <div className="section-container">
@@ -38,7 +39,7 @@ const AddStudent = () => {
                                 <input {...register("status")} type="radio" id="active" value="active" required/>Active
                                 <input {...register("status")} type="radio" id="active" value="inactive" required/>Inactive
                             </label>
-                            {loading && <CircularProgress color="secondary" />}
+                            {loading && <Preloader />}
                             <button type='submit'>Submit</button>
                             <div className="notification">
                             {addSuccessfully && <Alert severity="success">Student Add Successfully !!</Alert>}

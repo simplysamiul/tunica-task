@@ -64,11 +64,16 @@ export default function AllStudents() {
         setLoading(false)
       });
   },[currentPage]);
+
+
+  const componentRef = React.useRef();
+
+
   return (
     <>
     {loading ? <Preloader />
     :<div className='all-students-container'>
-    <TableContainer component={Paper}>
+    <TableContainer ref={componentRef} component={Paper}>
       <Table sx={{ minWidth: 600 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -106,6 +111,7 @@ export default function AllStudents() {
     <TableBottom 
       setCurrentPage={setCurrentPage}
       totalPage={totalPage}
+      componentRef={componentRef}
     />
     {/* Edit component */}
     <EditStudent

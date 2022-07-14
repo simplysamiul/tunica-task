@@ -1,5 +1,5 @@
-import { Alert, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
+import { Alert } from '@mui/material';
 import { useForm } from "react-hook-form";
 import formLogo from '../../../assets/logo1.svg';
 import '../../../styles/AddStudents.css';
@@ -11,7 +11,7 @@ const AddStudent = () => {
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = data => {
         setLoading(true);
-        fetch("https://obscure-wildwood-24223.herokuapp.com/addstudents", {
+        fetch("https://ronchon-chocolatine-52670.herokuapp.com/addstudents", {
             method: "POST",
             headers:{
                 "content-type" : "application/json"

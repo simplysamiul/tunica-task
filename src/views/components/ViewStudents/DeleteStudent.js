@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function DeleteStudent({ delet, setDelet, deleteId, setStudents, students }) {
   const handleClose = () => {setDelet(false)};
   const handleDelete = () =>{
-    const url = `https://obscure-wildwood-24223.herokuapp.com/removestudent/${deleteId}`;
+    const url = `https://ronchon-chocolatine-52670.herokuapp.com/removestudent/${deleteId}`;
     fetch(url,{
       method: "DELETE"
     })

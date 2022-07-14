@@ -49,7 +49,7 @@ export default function AllStudents() {
   const [students, setStudents] = React.useState([]);
   React.useEffect(()=>{
       setLoading(true)
-      fetch("https://obscure-wildwood-24223.herokuapp.com/allstudents")
+      fetch("https://ronchon-chocolatine-52670.herokuapp.com/allstudents")
       .then(res => res.json())
       .then(data => {
         setStudents(data)
@@ -96,6 +96,7 @@ export default function AllStudents() {
     editId={editId} 
     edit={edit}
     setEdit={setEdit}
+    students={students}
     />
     <DeleteStudent
     deleteId={deleteId}

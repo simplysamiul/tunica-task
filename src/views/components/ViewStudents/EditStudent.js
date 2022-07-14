@@ -20,21 +20,36 @@ const style = {
   p: 2,
 };
 
-export default function EditStudent({ edit, setEdit, editId }) {
+export default function EditStudent({ edit, setEdit, editId, students }) {
   const handleClose = () => setEdit(false);
   const [loading, setLoading] = React.useState(false);
-    const [addSuccessfully, setAddSuccessfully] = React.useState(false);
+  const [addSuccessfully, setAddSuccessfully] = React.useState(false);
+
+    // student update 
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = data => {
-        console.log(data);
+        // get specific data
+        const studentData = students.filter((student) => student._id === editId)
+        const specificData = studentData[0];
+        const name = data.name ? data.name : specificData.name;
+        const birth_date = data.birth_date ? data.birth_date : specificData.birth_date;
+        const school = data.school ? data.school : specificData.school;
+        const className = data.className ? data.className : specificData.className;
+        const division = data.division ? data.division : specificData.division;
+        const status = data.status ? data.status : specificData.status;
+        const editedData = {name, birth_date, school, className, division, status};
+
+
+
+
         setLoading(true);
-        const url = `https://obscure-wildwood-24223.herokuapp.com/updatestudent/${editId}`;
+        const url = `http://localhost:5000/updatestudent/${editId}`;
         fetch(url, {
             method: "PUT",
             headers:{
                 "content-type" : "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(editedData)
         })
         .then(res => res.json())
         .then(data => {
@@ -61,14 +76,14 @@ export default function EditStudent({ edit, setEdit, editId }) {
                 <div className="modal-form">
                     <img src={formLogo} alt="" />
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <input placeholder='Name*' {...register("name")} required />
-                            <input {...register("birth_date")} type="date" required />
-                            <input placeholder='School*' {...register("school")} required />
-                            <input placeholder='Class*' {...register("class")} required />
-                            <input placeholder='Division*' {...register("division")} required />
+                            <input placeholder='Name*' {...register("name")} />
+                            <input {...register("birth_date")} type="date" />
+                            <input placeholder='School*' {...register("school")} />
+                            <input placeholder='Class*' {...register("className")} />
+                            <input placeholder='Division*' {...register("division")} />
                             <label className="status-field">
-                                <input {...register("status")} type="radio" id="active" value="active" required/>Active
-                                <input {...register("status")} type="radio" id="active" value="inactive" required/>Inactive
+                                <input {...register("status")} type="radio" id="active" value="active" />Active
+                                <input {...register("status")} type="radio" id="active" value="inactive" />Inactive
                             </label>
                             {loading && <CircularProgress color="secondary" />}
                             <button type='submit'>Submit</button>

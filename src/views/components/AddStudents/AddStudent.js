@@ -33,7 +33,7 @@ const AddStudent = () => {
                             <input placeholder='Name*' {...register("name")} required />
                             <input {...register("birth_date")} type="date" required />
                             <input placeholder='School*' {...register("school")} required />
-                            <input placeholder='Class*' {...register("class")} required />
+                            <input placeholder='Class*' {...register("className")} required />
                             <input placeholder='Division*' {...register("division")} required />
                             <label className="status-field">
                                 <input {...register("status")} type="radio" id="active" value="active" required/>Active

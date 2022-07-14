@@ -79,7 +79,7 @@ export default function AllStudents() {
                 {student.name}
               </StyledTableCell>
               <StyledTableCell align="right">{student.school}</StyledTableCell>
-              <StyledTableCell align="right">{student.class}</StyledTableCell>
+              <StyledTableCell align="right">{student.className}</StyledTableCell>
               <StyledTableCell align="right">{student.division}</StyledTableCell>
               <StyledTableCell align="right">{student.birth_date}</StyledTableCell>
               <StyledTableCell align="right">{student.status}</StyledTableCell>

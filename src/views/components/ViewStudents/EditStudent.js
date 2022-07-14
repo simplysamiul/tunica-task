@@ -43,7 +43,7 @@ export default function EditStudent({ edit, setEdit, editId, students }) {
 
 
         setLoading(true);
-        const url = `http://localhost:5000/updatestudent/${editId}`;
+        const url = `https://ronchon-chocolatine-52670.herokuapp.com/updatestudent/${editId}`;
         fetch(url, {
             method: "PUT",
             headers:{

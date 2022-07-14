@@ -9,8 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import EditStudent from './EditStudent';
 import DeleteStudent from './DeleteStudent';
-import '../../../styles/Common.css';
 import Preloader from '../../custome/Preloader';
+import TableBottom from '../TableBottom';
+import '../../../styles/Common.css';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,21 +46,29 @@ export default function AllStudents() {
     setDeleteId(id);
     setDelet(true)
   };
+  // For pagination
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPage, setTotalPage] = React.useState(1);
+  const eachPageData = 9;
   // Show all students data
   const [students, setStudents] = React.useState([]);
   React.useEffect(()=>{
       setLoading(true)
-      fetch("https://ronchon-chocolatine-52670.herokuapp.com/allstudents")
+      fetch(`https://ronchon-chocolatine-52670.herokuapp.com/allstudents?page=${currentPage}&&pagedata=${eachPageData}`)
       .then(res => res.json())
       .then(data => {
-        setStudents(data)
+        setStudents(data.studentsData);
+        const count = data.count;
+        const studentCount = Math.ceil(count / eachPageData);
+        setTotalPage(studentCount)
         setLoading(false)
       });
-  },[]);
+  },[currentPage]);
   return (
     <>
     {loading ? <Preloader />
-    :<TableContainer component={Paper}>
+    :<div className='all-students-container'>
+    <TableContainer component={Paper}>
       <Table sx={{ minWidth: 600 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -91,13 +100,21 @@ export default function AllStudents() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>}
+    </TableContainer>
+    </div>}
+    {/* table bottom section */}
+    <TableBottom 
+      setCurrentPage={setCurrentPage}
+      totalPage={totalPage}
+    />
+    {/* Edit component */}
     <EditStudent
     editId={editId} 
     edit={edit}
     setEdit={setEdit}
     students={students}
     />
+    {/* delete component */}
     <DeleteStudent
     deleteId={deleteId}
     delet={delet}

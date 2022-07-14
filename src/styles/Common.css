@@ -17,3 +17,7 @@
     background-color: yellow;
     color: black;
 }
+.all-students-container{
+    margin: 50px;
+    box-shadow: 5px 5px 15px lightgrey;
+}

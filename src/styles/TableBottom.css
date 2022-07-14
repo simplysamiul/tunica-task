@@ -1,0 +1,17 @@
+.section-area{
+    padding: 20px 50px 80px 50px;
+}
+.section-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.download-button button{
+    background: #AD2626;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+}

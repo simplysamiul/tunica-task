@@ -11,7 +11,9 @@ import EditStudent from './EditStudent';
 import DeleteStudent from './DeleteStudent';
 import Preloader from '../../custome/Preloader';
 import TableBottom from '../TableBottom';
+import { useForm } from "react-hook-form";
 import '../../../styles/Common.css';
+import '../../../styles/SearchData.css';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -58,22 +60,51 @@ export default function AllStudents() {
       .then(res => res.json())
       .then(data => {
         setStudents(data.studentsData);
+        setFilterStudent(data.studentsData)
         const count = data.count;
         const studentCount = Math.ceil(count / eachPageData);
         setTotalPage(studentCount)
         setLoading(false)
       });
   },[currentPage]);
-
-
+  // For download as a pdf
   const componentRef = React.useRef();
-
-
+  // For search student data
+  const [filterStudent, setFilterStudent] = React.useState([]);
+  const { register, handleSubmit, reset } = useForm();
+  const onSubmit = data => {
+    
+    const filterData = students.filter((student) =>{
+      const filter = student.name.toLowerCase() === data.name.toLowerCase() && 
+      student.school.toLowerCase() === data.school.toLowerCase() && 
+      student.className.toString() === data.className.toString() && 
+      student.division.toLowerCase() === data.division.toLowerCase() ;
+      return filter;
+    })
+    setFilterStudent(filterData);
+    reset();
+  
+  };
   return (
     <>
     {loading ? <Preloader />
     :<div className='all-students-container'>
-    <TableContainer ref={componentRef} component={Paper}>
+      {/* student data search field */}
+      <div className='search-field-area'>
+            <div className="search-field-container">
+                <div className="search-form">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <input type="text" placeholder="Name*" {...register("name", { required: true })} />
+                    <input type="text" placeholder='School*' {...register("school", { required: true })} />
+                    <input type="number" placeholder='Class*' {...register("className", { required: true })} />
+                    <input type="text" placeholder='Division*' {...register("division", { required: true })} />
+                    <button className="search-button" type="submit">Search</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    {filterStudent.length === 0 ? <h3 style={{textAlign:"center", padding:"20px"}}>Student not found !</h3>
+      :<TableContainer ref={componentRef} component={Paper}>
       <Table sx={{ minWidth: 600 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -86,8 +117,8 @@ export default function AllStudents() {
             <StyledTableCell align="right">Manage</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {students.map((student) => (
+         <TableBody>
+          {filterStudent.map((student) => (
             <StyledTableRow key={student._id}>
               <StyledTableCell component="th" scope="row">
                 {student.name}
@@ -105,7 +136,7 @@ export default function AllStudents() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>}
     </div>}
     {/* table bottom section */}
     <TableBottom 
